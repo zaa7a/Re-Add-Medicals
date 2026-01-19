@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "  G",
+    " G ",
+    "P  "
+  ],
+  "key": {
+    "G": {
+      "tag": "c:glass_blocks/colorless"
+    },
+    "P": {
+      "tag": "c:glass_panes/colorless"
+    }
+  },
+  "result": {
+    "id": "add_medicals:syringe",
+    "count": 1
+  }
+}

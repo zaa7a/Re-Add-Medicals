@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "GTG",
+    "RMR",
+    "GTG"
+  ],
+  "key": {
+    "G": {
+      "tag": "c:ingots/gold"
+    },
+    "M": {
+      "item": "add_medicals:medical_kit"
+    },
+    "T": {
+      "item": "add_medicals:blood_transfusion"
+    },
+    "R": {
+      "tag": "c:rods/blaze"
+    }
+  },
+  "result": {
+    "id": "add_medicals:advanced_medical_kit",
+    "count": 1
+  }
+}

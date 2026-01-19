@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "IHI",
+    "ITI",
+    "IBI"
+  ],
+  "key": {
+    "H": {
+      "item": "add_medicals:hemostatic_pad"
+    },
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "B": {
+      "item": "add_medicals:bandage"
+    },
+    "T": {
+      "item": "add_medicals:blood_transfusion"
+    }
+  },
+  "result": {
+    "id": "add_medicals:medical_kit",
+    "count": 1
+  }
+}

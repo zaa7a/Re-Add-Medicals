@@ -1,0 +1,17 @@
+{
+  "itemGroup.add_medicals": "Re: Add Medicals",
+  "item.add_medicals.blood_transfusion": "輸血液",
+  "item.add_medicals.bandage": "包帯",
+  "item.add_medicals.hemostatic_pad": "止血パッド",
+  "item.add_medicals.medical_kit": "医療キット",
+  "item.add_medicals.advanced_medical_kit": "発展的な医療キット",
+  "item.add_medicals.syringe": "注射器",
+  "death.attack.add_medicals.bleeding": "%1$sは出血死した",
+  "death.attack.add_medicals.bleeding.player": "%1$sは%2$sによって出血死した",
+  "death.attack.add_medicals.bleeding.player.item": "%1$sは%2$sの%3$sによって出血死した",
+  "tooltip.add_medicals.blood_type": "血液型: %s%s",
+  "tooltip.add_medicals.blood_type.undefined": "血液型: 未設定",
+  "msg.add_medicals.gamerule_disabled": "マインクラフトのデフォルトで設定されている自然回復は無効化されています。",
+  "msg.add_medicals.gamerule_suggestion": "代わりに\"%s\"を使用してください。",
+  "msg.add_medicals.gamerule_hover": "クリックでペースト"
+}

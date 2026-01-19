@@ -1,0 +1,17 @@
+{
+  "itemGroup.add_medicals": "Re: Add Medicals",
+  "item.add_medicals.blood_transfusion": "Blood Transfusion",
+  "item.add_medicals.bandage": "Bandage",
+  "item.add_medicals.hemostatic_pad": "Hemostatic Pad",
+  "item.add_medicals.medical_kit": "Med Kit",
+  "item.add_medicals.advanced_medical_kit": "Advanced Med Kit",
+  "item.add_medicals.syringe": "Syringe",
+  "death.attack.add_medicals.bleeding": "%1$s was bled",
+  "death.attack.add_medicals.bleeding.player": "%1$s was bled by %2$s",
+  "death.attack.add_medicals.bleeding.player.item": "%1$s was bled by %2$s using %3$s",
+  "tooltip.add_medicals.blood_type": "Blood Type: %s%s",
+  "tooltip.add_medicals.blood_type.undefined": "Blood Type: Undefined",
+  "msg.add_medicals.gamerule_disabled": "Default Minecraft regeneration gamerule was disabled.",
+  "msg.add_medicals.gamerule_suggestion": "Please use \"%s\"",
+  "msg.add_medicals.gamerule_hover": "Click to suggest"
+}

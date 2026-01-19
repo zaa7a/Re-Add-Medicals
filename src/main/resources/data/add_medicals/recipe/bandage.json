@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "WS",
+    "W "
+  ],
+  "key": {
+    "W": {
+      "tag": "minecraft:wool"
+    },
+    "S": {
+      "tag": "c:slimeballs"
+    }
+  },
+  "result": {
+    "id": "add_medicals:bandage",
+    "count": 1
+  }
+}

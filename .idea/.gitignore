@@ -1,3 +1,26 @@
-# デフォルトの無視対象ファイル
-/shelf/
-/workspace.xml
+# Gradle
+.gradle/
+build/
+out/
+run/
+logs/
+classes/
+!gradle/wrapper/gradle-wrapper.jar
+
+# IntelliJ / IDEA
+.idea/
+*.iml
+
+# Misc
+*.log
+hs_err_pid*
+replay_pid*
+.DS_Store
+
+# NeoForge cache
+.neoforge/
+.cache/
+
+# Jars output
+*.jar
+*.zip

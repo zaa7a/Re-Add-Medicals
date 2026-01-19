@@ -21,6 +21,6 @@ replay_pid*
 .neoforge/
 .cache/
 
-# Jars output (配布は GitHub Releases で)
+# Jars output
 *.jar
 *.zip

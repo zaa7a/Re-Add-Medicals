@@ -25,18 +25,15 @@ public class AMCommands {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         String[] bloodTypes = {"A", "B", "O", "AB"};
         dispatcher.register(Commands.literal("add_medicals")
-                .requires(source -> source.hasPermission(2)) // 管理者権限が必要
+                .requires(source -> source.hasPermission(2))
                 .then(Commands.literal("set")
                         .then(Commands.argument("target", EntityArgument.player())
-                                // 血液量の設定
                                 .then(Commands.literal("blood")
                                         .then(Commands.argument("amount", IntegerArgumentType.integer(0, 1000))
                                                 .executes(context -> setBlood(context.getSource(), EntityArgument.getPlayer(context, "target"), IntegerArgumentType.getInteger(context, "amount")))))
-                                // 出血レベルの設定
                                 .then(Commands.literal("bleeding")
                                         .then(Commands.argument("level", IntegerArgumentType.integer(0, 7))
                                                 .executes(context -> setBleeding(context.getSource(), EntityArgument.getPlayer(context, "target"), IntegerArgumentType.getInteger(context, "level")))))
-                                // 骨折レベルの設定
                                 .then(Commands.literal("fracture")
                                         .then(Commands.argument("level", IntegerArgumentType.integer(0, 3))
                                                 .executes(context -> setFracture(context.getSource(), EntityArgument.getPlayer(context, "target"), IntegerArgumentType.getInteger(context, "level")))))
@@ -69,16 +66,13 @@ public class AMCommands {
                                         .suggests((context, builder) -> SharedSuggestionProvider.suggest(bloodTypes, builder))
                                         .then(Commands.argument("rh", StringArgumentType.word())
                                                         .suggests((context, builder) -> SharedSuggestionProvider.suggest(new String[]{"+", "-"}, builder))
-                                                        // --- ここから分岐 ---
-                                                        // 1. 量を指定しない場合 (デフォルト 1)
                                                         .executes(context -> giveBloodTransfusion(
                                                                 context.getSource(),
                                                                 EntityArgument.getPlayer(context, "target"),
                                                                 StringArgumentType.getString(context, "type"),
                                                                 StringArgumentType.getString(context, "rh"),
-                                                                1 // デフォルト値
+                                                                1
                                                         ))
-                                                        // 2. 量を指定する場合
                                                         .then(Commands.argument("amount", IntegerArgumentType.integer(1, 64))
                                                                 .executes(context -> giveBloodTransfusion(
                                                                         context.getSource(),
@@ -88,7 +82,6 @@ public class AMCommands {
                                                                         IntegerArgumentType.getInteger(context, "amount")
                                                                 ))
                                                         )
-                                                // --- ここまで ---
                                         )
                                 )
                         )
@@ -105,13 +98,11 @@ public class AMCommands {
 
     private static int setBleeding(CommandSourceStack source, Player player, int level) {
         player.setData(AMAttachments.BLEEDING_ATTACHMENT.get(), new BleedingImplements(level));
-        // 必要に応じてパケット送信処理を追加
         source.sendSuccess(() -> Component.literal(player.getName().getString() + " の出血レベルを " + level + " に設定しました"), true);
         return 1;
     }
 
     private static int setFracture(CommandSourceStack source, Player player, int level) {
-        // タイマーも0リセットして設定
         player.setData(AMAttachments.FRACTURE_ATTACHMENT.get(), new FractureImplements(level, 0));
         SendPacket.sendFracturePacket(player, level);
         source.sendSuccess(() -> Component.literal(player.getName().getString() + " の骨折レベルを " + level + " に設定しました"), true);
@@ -119,21 +110,16 @@ public class AMCommands {
     }
 
     private static int setBloodType(CommandSourceStack source, Player player, String type, String rhStr) {
-        // 文字列をbooleanに変換
         boolean isRhPositive = rhStr.equals("+");
 
-        // アタッチメントデータを取得
         BloodTypeImplements data = player.getData(AMAttachments.BLOOD_TYPE_ATTACHMENT.get());
 
-        // データを更新
         data.setType(type);
         data.setRh(isRhPositive);
-        data.setInitialized(true); // 手動設定したので初期化済みとする
+        data.setInitialized(true);
 
-        // アタッチメントに再セット（NeoForgeのアタッチメント仕様により必要）
         player.setData(AMAttachments.BLOOD_TYPE_ATTACHMENT.get(), data);
 
-        // 必要であればここでクライアントにパケットを送る（GUI表示用など）
         // SendPacket.sendBloodTypePacket(player, type, isRhPositive);
 
         source.sendSuccess(() -> Component.literal(
@@ -143,10 +129,8 @@ public class AMCommands {
         return 1;
     }
     private static int setBloodTypeRandom(CommandSourceStack source, Player player) {
-        // AMAttachments から血液型のアタッチメントを取得して渡す
         BloodTypeImplements data = player.getData(AMAttachments.BLOOD_TYPE_ATTACHMENT.get());
 
-        // 既存のランダム設定ロジックを呼び出す
         AMPlayerJoinEvent.setupRandomBloodType(data);
 
         data = player.getData(AMAttachments.BLOOD_TYPE_ATTACHMENT.get());
@@ -155,23 +139,18 @@ public class AMCommands {
         else {
             rh = "-";
         }
-        // プレイヤーへの通知（任意）
         BloodTypeImplements finalData = data;
         source.sendSuccess(() -> Component.literal(player.getName().getString() + " の血液型を再設定しました(" + finalData.getType() + rh + ")"), true);
 
-        return 1; // コマンドの実行成功を返す
+        return 1;
     }
     private static int giveBloodTransfusion(CommandSourceStack source, Player player, String type, String rhStr, int amount) {
-        // Rhの文字列をbooleanに変換
         boolean isRhPositive = rhStr.equals("+");
 
-        // アイテムスタックを作成し、個数を設定
         ItemStack stack = new ItemStack(AMItems.BLOOD_TRANSFUSION.get(), amount);
 
-        // データコンポーネントの設定
         stack.set(AMDataComponents.BLOOD_TYPE.get(), new BloodTypeImplements(type, isRhPositive, true));
 
-        // プレイヤーにアイテムを渡す（インベントリがいっぱいの場合は足元にドロップされる）
         if (!player.getInventory().add(stack)) {
             player.drop(stack, false);
         }

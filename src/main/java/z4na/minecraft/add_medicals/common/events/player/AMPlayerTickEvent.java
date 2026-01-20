@@ -22,7 +22,6 @@ public class AMPlayerTickEvent {
     public static void onEvent(PlayerTickEvent.Post event) {
         Player player = event.getEntity();
 
-        // サーバー側、生存中、サバイバルモードのみ
         if (!player.level().isClientSide() && player.isAlive() && !player.isCreative()) {
 
             BleedingImplements bleedingData = player.getData(AMAttachments.BLEEDING_ATTACHMENT.get());
@@ -31,18 +30,16 @@ public class AMPlayerTickEvent {
 
             int bleedingLevel = bleedingData.get();
             int currentBlood = bloodData.get();
-            int currentBleedingTick = bleedingData.getLastBleedingTick(); // これを「0からの蓄積カウント」として扱う
+            int currentBleedingTick = bleedingData.getLastBleedingTick();
             int oldBlood = currentBlood;
 
-            // クライアントへ同期
             if (player instanceof ServerPlayer serverPlayer) {
                 SendPacket.sendBleedingPacket(serverPlayer, bleedingLevel);
             }
 
-            // --- 1. 出血レベルが1以上の場合のメイン処理 ---
+            //bleeding
             if (bleedingLevel > 0) {
 
-                // A. 血液減少ロジック (ワールド時間を補助的に使用)
                 int bloodInterval = (bleedingLevel == 1) ? 4 : (bleedingLevel == 2) ? 2 : 1;
                 if (player.tickCount % bloodInterval == 0) {
                     int reduction = (bleedingLevel >= 3) ? (bleedingLevel - 2) : 1;
@@ -51,18 +48,13 @@ public class AMPlayerTickEvent {
                     player.setData(AMAttachments.BLOOD_REGEN_TICK.get(), new BloodRegenImplements(0));
                 }
 
-                // カウントを1進める (ダメージとレベル低下の両方に使用)
                 currentBleedingTick++;
 
-                // B. 出血レベル低下ロジック (240tick = 12秒ごと)
-                // カウントが12秒に達したらレベルを下げ、カウントをリセットする
                 if (currentBleedingTick >= 240) {
                     bleedingLevel--;
-                    currentBleedingTick = 0; // カウントを0に戻す
+                    currentBleedingTick = 0;
                 }
 
-                // C. 体力ダメージロジック
-                // ※ bleedingLevelが下がって0になった場合はダメージ判定を行わない
                 if (bleedingLevel > 0) {
                     int damageInterval = switch (bleedingLevel) {
                         case 1 -> 120;
@@ -80,30 +72,25 @@ public class AMPlayerTickEvent {
                         default -> 0.0f;
                     };
 
-                    // ダメージ間隔に達したか判定 (currentBleedingTickをそのまま流用)
-                    // 注: 120, 100, 80などはすべて240の約数ではないため、
-                    // 12秒の間に複数回ダメージが入る形になります
                     if (damageInterval > 0 && currentBleedingTick % damageInterval == 0) {
                         player.hurt(AMDamageSources.bleeding(player.level()), damageAmount);
                     }
                 }
 
-                // 最後に更新された出血ステータスを保存
                 player.setData(AMAttachments.BLEEDING_ATTACHMENT.get(), new BleedingImplements(bleedingLevel, currentBleedingTick));
 
             } else {
-                // 出血レベル0ならカウントも0
                 if (currentBleedingTick != 0) {
                     player.setData(AMAttachments.BLEEDING_ATTACHMENT.get(), new BleedingImplements(0, 0));
                 }
             }
 
-            // --- 2. 即死判定 ---
+            // fast death
             if (currentBlood <= 0) {
                 player.hurt(AMDamageSources.bleeding(player.level()), Float.MAX_VALUE);
             }
 
-            // --- 3. 骨折ロジック (既存) ---
+            // fracture
             int fractureLevel = fractureData.get();
             int currentFractureTick = fractureData.getLastFractureTick();
             AttributeInstance movementSpeed = player.getAttribute(Attributes.MOVEMENT_SPEED);
@@ -126,8 +113,7 @@ public class AMPlayerTickEvent {
                 }
             }
 
-            // --- 4. 血液回復・パケット同期 ---
-            // (血液回復ロジックは既存のまま)
+            // heal
             var regenData = player.getData(AMAttachments.BLOOD_REGEN_TICK.get());
             int currentTimer = regenData.get();
             if (currentTimer < 602) regenData.set(currentTimer + 1);
@@ -137,11 +123,10 @@ public class AMPlayerTickEvent {
                 if (bloodData.get() < bloodData.getMax()) {
                     int nextBlood = bloodData.get() + 1;
                     bloodData.set(nextBlood);
-                    currentBlood = nextBlood; // 同期用に更新
+                    currentBlood = nextBlood;
                 }
             }
 
-            // 血液量に変化があれば同期
             if (oldBlood != currentBlood && player instanceof ServerPlayer serverPlayer) {
                 SendPacket.sendBloodPacket(serverPlayer, currentBlood);
             }

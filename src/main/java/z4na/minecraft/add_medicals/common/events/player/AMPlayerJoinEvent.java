@@ -11,7 +11,6 @@ import java.util.Random;
 public class AMPlayerJoinEvent {
     public static void onEvent(PlayerEvent.PlayerLoggedInEvent event) {
         Player player = event.getEntity();
-        // Attachmentからデータを取得
         BloodTypeImplements data = player.getData(AMAttachments.BLOOD_TYPE_ATTACHMENT.get());
         int bloodLevel = player.getData(AMAttachments.BLOOD_ATTACHMENT.get()).get();
         int bleedingLevel = player.getData(AMAttachments.BLEEDING_ATTACHMENT.get()).get();
@@ -19,7 +18,6 @@ public class AMPlayerJoinEvent {
         SendPacket.sendBloodPacket(player, bloodLevel);
         SendPacket.sendBleedingPacket(player, bleedingLevel);
         SendPacket.sendFracturePacket(player, fractureLevel);
-        // まだ初期化されていない場合のみランダム決定を実行
         if (!data.isInitialized()) {
             setupRandomBloodType(data);
         }
@@ -31,7 +29,6 @@ public class AMPlayerJoinEvent {
 
         data.setType(types[random.nextInt(types.length)]);
         data.setRh(random.nextBoolean());
-        // 初期化済みフラグを立てる
         data.setInitialized(true);
     }
 }

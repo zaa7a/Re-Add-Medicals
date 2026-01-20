@@ -12,7 +12,7 @@ public class AMDataComponents {
     public static final Supplier<DataComponentType<BloodTypeImplements>> BLOOD_TYPE =
             COMPONENTS.register("blood_type", () -> DataComponentType.<BloodTypeImplements>builder()
                     .persistent(BloodTypeImplements.CODEC)
-                    .networkSynchronized(BloodTypeImplements.STREAM_CODEC) // ここをSTREAM_CODECにする
+                    .networkSynchronized(BloodTypeImplements.STREAM_CODEC)
                     .build());
     public static void init() {}
 }

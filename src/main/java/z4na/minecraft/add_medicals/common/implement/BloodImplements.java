@@ -14,7 +14,6 @@ public class BloodImplements implements Blood {
         this.blood = 1000;
     }
 
-    // 2. 引数ありコンストラクタ（保存データからの復元用）
     public BloodImplements(Integer integer) {
         this.blood = integer;
     }

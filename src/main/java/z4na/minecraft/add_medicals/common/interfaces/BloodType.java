@@ -7,7 +7,6 @@ public interface BloodType {
     boolean isRh();
     void setRh(boolean rh);
 
-    // インターフェースの古いメソッドは不要であれば削除、またはデフォルト実装
     int get();
 
     void set(int amount);

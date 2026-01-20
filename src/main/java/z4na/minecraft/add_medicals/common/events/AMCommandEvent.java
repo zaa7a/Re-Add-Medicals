@@ -16,10 +16,8 @@ public class AMCommandEvent {
             command = command.substring(1);
         }
         if (command.startsWith("gamerule naturalRegeneration")) {
-            // コマンドの実行をキャンセル
             event.setCanceled(true);
 
-            // 実行者に誘導メッセージを送信
             if (event.getParseResults().getContext().getSource().getEntity() != null) {
                 var source = event.getParseResults().getContext().getSource();
 
@@ -27,7 +25,6 @@ public class AMCommandEvent {
                 source.sendSystemMessage(Component.translatable("msg.add_medicals.gamerule_disabled")
                         .withStyle(ChatFormatting.RED));
 
-                // クリックすると新しいコマンドが自動入力されるリンク付きメッセージ
                 String suggest = "/gamerule naturalHealthRegeneration";
                 source.sendSystemMessage(Component.translatable("msg.add_medicals.gamerule_suggestion", suggest)
                         .withStyle(ChatFormatting.RED)

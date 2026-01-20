@@ -15,7 +15,6 @@ public class PacketHandler {
 
     @SubscribeEvent
     public static void register(final RegisterPayloadHandlersEvent event) {
-        // このイベントはMODバスのものなので、自動的にMODバスとして登録されます
         final PayloadRegistrar registrar = event.registrar("1");
 
         registrar.playToClient(

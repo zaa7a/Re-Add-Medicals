@@ -10,7 +10,6 @@ import z4na.minecraft.add_medicals.common.damage_type.AMDamageTypes;
 
 public class AMDamageSources {
     public static DamageSource bleeding(Level level) {
-        // レジストリから独自ダメージタイプを取得
         Holder<DamageType> holder = level.registryAccess()
                 .registryOrThrow(Registries.DAMAGE_TYPE)
                 .getHolderOrThrow(AMDamageTypes.BLEEDING);

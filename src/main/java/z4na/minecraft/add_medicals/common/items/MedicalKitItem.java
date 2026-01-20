@@ -45,7 +45,6 @@ public class MedicalKitItem extends Item {
     @Override
     public @NotNull ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
         if (entity instanceof Player player && !level.isClientSide() && player.isAlive()) {
-            // 現在の出血データを取得
             BloodImplements bloodData = player.getData(AMAttachments.BLOOD_ATTACHMENT.get());
             BleedingImplements bleedingData = player.getData(AMAttachments.BLEEDING_ATTACHMENT.get());
             FractureImplements fractureData = player.getData(AMAttachments.FRACTURE_ATTACHMENT.get());

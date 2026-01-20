@@ -6,9 +6,6 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.loading.FMLEnvironment;
 import z4na.minecraft.add_medicals.client.AddMedicalsClient;
-import z4na.minecraft.add_medicals.common.attachments.AMAttachments;
-import z4na.minecraft.add_medicals.common.events.AMPlayerEvent;
-import z4na.minecraft.add_medicals.common.events.AMWorldLoadEvent;
 import z4na.minecraft.add_medicals.common.registries.*;
 
 

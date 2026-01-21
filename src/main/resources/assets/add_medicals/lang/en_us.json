@@ -13,5 +13,10 @@
   "tooltip.add_medicals.blood_type.undefined": "Blood Type: Undefined",
   "msg.add_medicals.gamerule_disabled": "Default Minecraft regeneration gamerule was disabled.",
   "msg.add_medicals.gamerule_suggestion": "Please use \"%s\"",
-  "msg.add_medicals.gamerule_hover": "Click to suggest"
+  "msg.add_medicals.gamerule_hover": "Click to suggest",
+  "commands.add_medicals.set.blood.success": "Set blood amount of %s to %s",
+  "commands.add_medicals.set.bleeding.success": "Set bleeding level of %s to %s",
+  "commands.add_medicals.set.fracture.success": "Set fracture level of %s to %s",
+  "commands.add_medicals.blood_type.set.success": "Set blood type of %1$s to %2$s%3$s",
+  "commands.add_medicals.blood_transfusion.success": "Gave %4$d blood transfusion (%2$s%3$s) to %1$s"
 }

@@ -13,5 +13,10 @@
   "tooltip.add_medicals.blood_type.undefined": "血液型: 未設定",
   "msg.add_medicals.gamerule_disabled": "マインクラフトのデフォルトで設定されている自然回復は無効化されています。",
   "msg.add_medicals.gamerule_suggestion": "代わりに\"%s\"を使用してください。",
-  "msg.add_medicals.gamerule_hover": "クリックでペースト"
+  "msg.add_medicals.gamerule_hover": "クリックでペースト",
+  "commands.add_medicals.set.blood.success": "%sの血液量を%sに設定しました",
+  "commands.add_medicals.set.bleeding.success": "%sの出血レベルを%sに設定しました",
+  "commands.add_medicals.set.fracture.success": "%sの骨折レベルを%sに設定しました",
+  "commands.add_medicals.blood_type.set.success": "%1$sの血液型を%2$s%3$sに設定しました",
+  "commands.add_medicals.blood_transfusion.success": "%1$sに輸血液(%2$s%3$s)を%4$d個付与しました"
 }

@@ -92,40 +92,51 @@ public class AMCommands {
     private static int setBlood(CommandSourceStack source, Player player, int amount) {
         player.setData(AMAttachments.BLOOD_ATTACHMENT.get(), new BloodImplements(amount));
         SendPacket.sendBloodPacket(player, amount);
-        source.sendSuccess(() -> Component.literal(player.getName().getString() + " の血液量を " + amount + " に設定しました"), true);
+        source.sendSuccess(() -> Component.translatable("commands.add_medicals.set.blood.success",
+                player.getName().getString(), amount), true);
         return 1;
     }
 
     private static int setBleeding(CommandSourceStack source, Player player, int level) {
-        player.setData(AMAttachments.BLEEDING_ATTACHMENT.get(), new BleedingImplements(level));
-        source.sendSuccess(() -> Component.literal(player.getName().getString() + " の出血レベルを " + level + " に設定しました"), true);
+        player.setData(AMAttachments.BLEEDING_ATTACHMENT.get(), new BleedingImplements(level, 0));
+        SendPacket.sendBleedingPacket(player, level);
+        source.sendSuccess(() -> Component.translatable("commands.add_medicals.set.bleeding.success",
+                player.getName().getString(), level), true);
         return 1;
     }
 
     private static int setFracture(CommandSourceStack source, Player player, int level) {
         player.setData(AMAttachments.FRACTURE_ATTACHMENT.get(), new FractureImplements(level, 0));
         SendPacket.sendFracturePacket(player, level);
-        source.sendSuccess(() -> Component.literal(player.getName().getString() + " の骨折レベルを " + level + " に設定しました"), true);
+        source.sendSuccess(() -> Component.translatable("commands.add_medicals.set.fracture.success",
+                player.getName().getString(), level), true);
         return 1;
     }
 
     private static int setBloodType(CommandSourceStack source, Player player, String type, String rhStr) {
         boolean isRhPositive = rhStr.equals("+");
-
         BloodTypeImplements data = player.getData(AMAttachments.BLOOD_TYPE_ATTACHMENT.get());
-
         data.setType(type);
         data.setRh(isRhPositive);
         data.setInitialized(true);
-
         player.setData(AMAttachments.BLOOD_TYPE_ATTACHMENT.get(), data);
 
-        // SendPacket.sendBloodTypePacket(player, type, isRhPositive);
+        source.sendSuccess(() -> Component.translatable("commands.add_medicals.blood_type.set.success",
+                player.getName().getString(), type, rhStr), true);
+        return 1;
+    }
 
-        source.sendSuccess(() -> Component.literal(
-                String.format("%s の血液型を %s%s に設定しました",
-                        player.getName().getString(), type, rhStr)), true);
+    private static int giveBloodTransfusion(CommandSourceStack source, Player player, String type, String rhStr, int amount) {
+        boolean isRhPositive = rhStr.equals("+");
+        ItemStack stack = new ItemStack(AMItems.BLOOD_TRANSFUSION.get(), amount);
+        stack.set(AMDataComponents.BLOOD_TYPE.get(), new BloodTypeImplements(type, isRhPositive, true));
 
+        if (!player.getInventory().add(stack)) {
+            player.drop(stack, false);
+        }
+
+        source.sendSuccess(() -> Component.translatable("commands.add_medicals.blood_transfusion.success",
+                player.getName().getString(), type, rhStr, amount), true);
         return 1;
     }
     private static int setBloodTypeRandom(CommandSourceStack source, Player player) {
@@ -141,23 +152,6 @@ public class AMCommands {
         }
         BloodTypeImplements finalData = data;
         source.sendSuccess(() -> Component.literal(player.getName().getString() + " の血液型を再設定しました(" + finalData.getType() + rh + ")"), true);
-
-        return 1;
-    }
-    private static int giveBloodTransfusion(CommandSourceStack source, Player player, String type, String rhStr, int amount) {
-        boolean isRhPositive = rhStr.equals("+");
-
-        ItemStack stack = new ItemStack(AMItems.BLOOD_TRANSFUSION.get(), amount);
-
-        stack.set(AMDataComponents.BLOOD_TYPE.get(), new BloodTypeImplements(type, isRhPositive, true));
-
-        if (!player.getInventory().add(stack)) {
-            player.drop(stack, false);
-        }
-
-        source.sendSuccess(() -> Component.literal(
-                String.format("%s に血液パック(%s%s) を %d 個付与しました",
-                        player.getName().getString(), type, rhStr, amount)), true);
 
         return 1;
     }

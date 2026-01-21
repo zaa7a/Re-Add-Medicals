@@ -150,9 +150,10 @@ public class AMCommands {
         else {
             rh = "-";
         }
+        String type = data.getType();
         BloodTypeImplements finalData = data;
-        source.sendSuccess(() -> Component.literal(player.getName().getString() + " の血液型を再設定しました(" + finalData.getType() + rh + ")"), true);
-
+        source.sendSuccess(() -> Component.translatable("commands.add_medicals.blood_type.random.success",
+                player.getName().getString(), type, rh), true);
         return 1;
     }
 }

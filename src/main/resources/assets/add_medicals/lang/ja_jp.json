@@ -18,5 +18,6 @@
   "commands.add_medicals.set.bleeding.success": "%sの出血レベルを%sに設定しました",
   "commands.add_medicals.set.fracture.success": "%sの骨折レベルを%sに設定しました",
   "commands.add_medicals.blood_type.set.success": "%1$sの血液型を%2$s%3$sに設定しました",
-  "commands.add_medicals.blood_transfusion.success": "%1$sに輸血液(%2$s%3$s)を%4$d個付与しました"
+  "commands.add_medicals.blood_transfusion.success": "%1$sに輸血液(%2$s%3$s)を%4$d個付与しました",
+  "commands.add_medicals.blood_type.random.success": "%1$sの血液型を再設定しました(%2$s%3$s)"
 }

@@ -151,7 +151,6 @@ public class AMCommands {
             rh = "-";
         }
         String type = data.getType();
-        BloodTypeImplements finalData = data;
         source.sendSuccess(() -> Component.translatable("commands.add_medicals.blood_type.random.success",
                 player.getName().getString(), type, rh), true);
         return 1;

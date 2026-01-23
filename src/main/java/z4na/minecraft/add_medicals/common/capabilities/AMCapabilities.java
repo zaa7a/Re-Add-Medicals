@@ -4,10 +4,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.capabilities.CapabilityRegistry;
 import net.neoforged.neoforge.capabilities.EntityCapability;
-import z4na.minecraft.add_medicals.common.interfaces.Bleeding;
-import z4na.minecraft.add_medicals.common.interfaces.Blood;
-import z4na.minecraft.add_medicals.common.interfaces.BloodType;
-import z4na.minecraft.add_medicals.common.interfaces.Fracture;
+import z4na.minecraft.add_medicals.common.interfaces.*;
 
 public class AMCapabilities {
     public static final EntityCapability<Blood, Void> BLOOD =
@@ -32,6 +29,12 @@ public class AMCapabilities {
             EntityCapability.create(
                     ResourceLocation.fromNamespaceAndPath("add_medicals", "blood_type"),
                     BloodType.class,
+                    Void.class
+            );
+    public static final EntityCapability<IsDowned, Void> IS_DOWNED =
+            EntityCapability.create(
+                    ResourceLocation.fromNamespaceAndPath("add_medicals", "is_downed"),
+                    IsDowned.class,
                     Void.class
             );
 }

@@ -40,6 +40,12 @@ public class AMAttachments {
                     .serialize(BloodRegenImplements.CODEC)
                     .build()
     );
+    public static final Supplier<AttachmentType<IsDownedImplements>> DOWNED_ATTACHMENT = ATTACHMENT_TYPES.register(
+            "is_downed",
+            () -> AttachmentType.builder(() -> new IsDownedImplements())
+                    .serialize(IsDownedImplements.CODEC)
+                    .build()
+    );
 
     public static void init() {}
 }

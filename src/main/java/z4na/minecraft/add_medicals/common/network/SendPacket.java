@@ -28,4 +28,12 @@ public class SendPacket {
             );
         }
     }
+    public static void sendDownedPacket(Player player, boolean isDowned) {
+        if (player instanceof ServerPlayer serverPlayer) {
+            net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(
+                    serverPlayer,
+                    new SyncPacket.IsDownedSyncPacket(isDowned)
+            );
+        }
+    }
 }

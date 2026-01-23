@@ -25,6 +25,11 @@ public class AMCapabilitiesRegister {
                 EntityType.PLAYER, //Target
                 (player, side) -> player.getData(FRACTURE_ATTACHMENT)
         );
+        event.registerEntity(
+                AMCapabilities.IS_DOWNED,
+                EntityType.PLAYER,
+                (player, side) -> player.getData(DOWNED_ATTACHMENT)
+        );
     }
 
     public static void register(IEventBus bus) {

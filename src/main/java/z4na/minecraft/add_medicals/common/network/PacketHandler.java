@@ -41,5 +41,13 @@ public class PacketHandler {
                 ),
                 AddMedicalsClient::handleFractureSync
         );
+        registrar.playToClient(
+                SyncPacket.IsDownedSyncPacket.TYPE_IS_DOWNED,
+                StreamCodec.composite(
+                        ByteBufCodecs.BOOL, SyncPacket.IsDownedSyncPacket::isDowned,
+                        SyncPacket.IsDownedSyncPacket::new
+                ),
+                AddMedicalsClient::handleIsDownedSync
+        );
     }
 }

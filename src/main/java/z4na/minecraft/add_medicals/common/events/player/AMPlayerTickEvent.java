@@ -1,14 +1,14 @@
 package z4na.minecraft.add_medicals.common.events.player;
 
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import z4na.minecraft.add_medicals.common.attachments.AMAttachments;
 import z4na.minecraft.add_medicals.common.damage_sources.AMDamageSources;
-import z4na.minecraft.add_medicals.common.implement.BleedingImplements;
-import z4na.minecraft.add_medicals.common.implement.BloodImplements;
-import z4na.minecraft.add_medicals.common.implement.BloodRegenImplements;
-import z4na.minecraft.add_medicals.common.implement.FractureImplements;
+import z4na.minecraft.add_medicals.common.implement.*;
 import z4na.minecraft.add_medicals.common.network.SendPacket;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -130,6 +130,12 @@ public class AMPlayerTickEvent {
             if (oldBlood != currentBlood && player instanceof ServerPlayer serverPlayer) {
                 SendPacket.sendBloodPacket(serverPlayer, currentBlood);
             }
+        }
+        IsDownedImplements downedData = player.getData(AMAttachments.DOWNED_ATTACHMENT.get());
+        if (downedData.isDowned()) {
+            player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20, 0, false, false));
+
+            player.setPose(Pose.SWIMMING);
         }
         AMNaturalRegenerationEvent.onEvent(event);
     }

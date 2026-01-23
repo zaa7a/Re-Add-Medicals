@@ -42,4 +42,15 @@ public class SyncPacket {
             return TYPE_FRACTURE;
         }
     }
+    public record IsDownedSyncPacket(boolean isDowned) implements CustomPacketPayload {
+
+        public static final Type<IsDownedSyncPacket> TYPE_IS_DOWNED = new Type<>(
+                ResourceLocation.fromNamespaceAndPath(AddMedicals.MOD_ID, "is_downed_sync")
+        );
+
+        @Override
+        public @NotNull Type<? extends CustomPacketPayload> type() {
+            return TYPE_IS_DOWNED;
+        }
+    }
 }
